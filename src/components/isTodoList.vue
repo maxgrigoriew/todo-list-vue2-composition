@@ -23,7 +23,7 @@ export default defineComponent({
 	components: { isTodoItem },
 	props: ['todos'],
 	setup(props, { emit }) {
-		const removeTodo = id => {
+		const removeTodo = (id) => {
 			emit('remove-todo', id)
 		}
 
@@ -31,7 +31,7 @@ export default defineComponent({
 			emit('toggle-check', id, index)
 		}
 
-		const editTodo = index => {
+		const editTodo = (index) => {
 			emit('edit-todo', index)
 		}
 		return {

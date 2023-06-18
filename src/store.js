@@ -25,8 +25,21 @@ export const store = new Vuex.Store({
 		setLocalSorage(state) {
 			localStorage.setItem('todos', JSON.stringify(state.todos))
 		},
+
 		addTodo(state, todo) {
 			state.todos.push(todo)
+			this.commit('setLocalSorage', state.todos)
+		},
+
+		removeTodo(state, todoId) {
+			state.todos = state.todos.filter((todo) => todo.id !== todoId)
+			this.commit('setLocalSorage', state.todos)
+		},
+
+		toggleCheck(state, index) {
+			state.todos[index].isDone === false
+				? (state.todos[index].isDone = true)
+				: (state.todos[index].isDone = false)
 			this.commit('setLocalSorage', state.todos)
 		},
 	},

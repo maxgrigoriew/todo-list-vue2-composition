@@ -50,13 +50,11 @@ export default defineComponent({
 		}
 
 		const removeTodo = (todoId) => {
-			todos.value = todos.value.filter((todo) => todo.id !== todoId)
+			store.commit('removeTodo', todoId)
 		}
 
 		const toggleCheck = (id, index) => {
-			todos.value[index].isDone === false
-				? (todos.value[index].isDone = true)
-				: (todos.value[index].isDone = false)
+			store.commit('toggleCheck', index)
 		}
 
 		const openTodo = (index) => {
