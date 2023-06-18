@@ -1,29 +1,40 @@
 <template>
 	<div class="todo">
+		<pre>index: {{ (todoIndex, isOpenModal) }}</pre>
+		<isBtn @click="toggleModal">button</isBtn>
 		<h2 class="todo__title">Какие планы на сегодня?</h2>
 		<form class="form" @submit.prevent="addTodo">
-			<div>{{ todos }}</div>
-			<isInput type="text" class="form__input" v-model="inputValue" />
+			<isInput class="form__input" v-model="inputValue" />
 			<IsBtn class="btn" @click="addTodo">Добавить задачу</IsBtn>
 		</form>
 		<is-todo-list
 			:todos="todos"
 			@remove-todo="removeTodo"
 			@toggle-check="toggleCheck"
+			@edit-todo="editTodo"
 		/>
+		<is-modal :isModal="isOpenModal" @close-modal="toggleModal">
+			<h3>Редактирование задачи</h3>
+			<isInput class="form__input" v-model="todoTitle" />
+			<isBtn>Сохранить</isBtn>
+		</is-modal>
 	</div>
 </template>
 <script>
 import IsBtn from '@/components/isBtn.vue'
 import isInput from '@/components/isInput.vue'
+import IsModal from '@/components/isModal.vue'
 import IsTodoList from '@/components/isTodoList.vue'
 import { defineComponent, onMounted, ref } from 'vue'
 
 export default defineComponent({
 	name: 'TodoPage',
-	components: { IsBtn, isInput, IsTodoList },
+	components: { IsBtn, isInput, IsTodoList, IsModal },
 	setup() {
 		const inputValue = ref('')
+		const todoTitle = ref('')
+		const todoIndex = ref(null)
+		const isOpenModal = ref(false)
 		const todos = ref([{ id: 1, title: 'sfsdfds', isDone: false }])
 
 		const setLocalSorage = () => {
@@ -43,18 +54,25 @@ export default defineComponent({
 			}
 		}
 
-		const removeTodo = todoId => {
-			console.log('id', todoId)
-			todos.value = todos.value.filter(todo => todo.id !== todoId)
+		const removeTodo = (todoId) => {
+			todos.value = todos.value.filter((todo) => todo.id !== todoId)
 			setLocalSorage()
 		}
 
-		const toggleCheck = id => {
-			console.log('isDone', id)
-			const todo = todos.value.find(todo => todo.id === id)
-			console.log(todo)
+		const toggleCheck = (id, index) => {
+			todos.value[index].isDone === false
+				? (todos.value[index].isDone = true)
+				: (todos.value[index].isDone = false)
 		}
 
+		const editTodo = (index) => {
+			console.log('edit', index)
+			todoIndex.value = index
+			isOpenModal.value = true
+			// todos.value[index].title = todoTitle.value
+		}
+
+		const toggleModal = () => (isOpenModal.value = !isOpenModal.value)
 		onMounted(() => {
 			if (localStorage.getItem('todos')) {
 				todos.value = JSON.parse(localStorage.getItem('todos'))
@@ -66,6 +84,11 @@ export default defineComponent({
 			addTodo,
 			removeTodo,
 			toggleCheck,
+			editTodo,
+			todoTitle,
+			todoIndex,
+			isOpenModal,
+			toggleModal,
 		}
 	},
 })

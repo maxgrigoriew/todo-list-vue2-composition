@@ -6,13 +6,13 @@
 				<span class="todo__title">{{ todo.title }}</span>
 			</div>
 			<div class="todo__buttons">
-				<isBtn @click="toggleCheck(todo.id)">
+				<isBtn @click="toggleCheck(todo.id, index)">
 					<font-awesome-icon icon="fa-solid fa-check" />
 				</isBtn>
 				<isBtn @click="removeTodo(todo.id)">
 					<font-awesome-icon icon="fa-solid fa-trash-can" />
 				</isBtn>
-				<isBtn>
+				<isBtn @click="editTodo(index)">
 					<font-awesome-icon icon="fa-solid fa-pen-to-square" />
 				</isBtn>
 			</div>
@@ -27,16 +27,21 @@ export default defineComponent({
 	emits: ['isDone'],
 	components: { isBtn },
 	setup(props, { emit }) {
-		const toggleCheck = id => {
-			emit('toggle-check', id)
+		const toggleCheck = (id, index) => {
+			emit('toggle-check', id, index)
 		}
-		const removeTodo = id => {
+
+		const removeTodo = (id) => {
 			emit('remove-todo', id)
 		}
 
+		const editTodo = (index) => {
+			emit('edit-todo', index)
+		}
 		return {
 			toggleCheck,
 			removeTodo,
+			editTodo,
 		}
 	},
 })

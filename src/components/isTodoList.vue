@@ -7,9 +7,9 @@
 				:key="item.id"
 				:index="index"
 				:todo="item"
-				@isDone="$emit('isDone')"
 				@remove-todo="removeTodo"
 				@toggle-check="toggleCheck"
+				@edit-todo="editTodo"
 			/>
 		</ul>
 		<h3 v-else>Список пуст</h3>
@@ -27,12 +27,17 @@ export default defineComponent({
 			emit('remove-todo', id)
 		}
 
-		const toggleCheck = id => {
-			emit('toggle-check', id)
+		const toggleCheck = (id, index) => {
+			emit('toggle-check', id, index)
+		}
+
+		const editTodo = index => {
+			emit('edit-todo', index)
 		}
 		return {
 			removeTodo,
 			toggleCheck,
+			editTodo,
 		}
 	},
 })
