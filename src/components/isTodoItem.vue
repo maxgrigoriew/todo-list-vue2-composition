@@ -1,12 +1,15 @@
 <template>
 	<li class="todo">
 		<div class="todo__inner">
-			<div class="todo__title" :class="{ done: !todo.isDone }">
+			<div class="todo__title" :class="{ done: todo.isDone }">
 				<span class="todo__number">{{ index + 1 }}.</span>
 				<span class="todo__title">{{ todo.title }}</span>
 			</div>
 			<div class="todo__buttons">
-				<isBtn @click="toggleCheck(todo.id, index)">
+				<isBtn
+					@click="toggleCheck(todo.id, index)"
+					:class="{ active: todo.isDone }"
+				>
 					<font-awesome-icon icon="fa-solid fa-check" />
 				</isBtn>
 				<isBtn @click="removeTodo(todo.id)">
@@ -65,5 +68,8 @@ export default defineComponent({
 .done {
 	text-decoration: line-through;
 	color: $gray-color;
+}
+.active {
+	background: $dark-color;
 }
 </style>

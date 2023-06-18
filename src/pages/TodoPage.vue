@@ -72,10 +72,12 @@ export default defineComponent({
 
 		const editTodo = () => {
 			todos.value[todoIndex.value].title = todoTitle.value
+			todos.value[todoIndex.value].isDone = false
 			todoTitle.value = ''
 			isOpenModal.value = false
 			setLocalSorage()
 		}
+
 		const openModal = () => {
 			todoTitle.value = ''
 			isOpenModal.value = !isOpenModal.value
