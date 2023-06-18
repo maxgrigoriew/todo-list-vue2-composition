@@ -1,7 +1,5 @@
 <template>
 	<div class="todo">
-		<pre>index: {{ (todoIndex, isOpenModal) }}</pre>
-		<isBtn @click="toggleModal">button</isBtn>
 		<h2 class="todo__title">Какие планы на сегодня?</h2>
 		<form class="form" @submit.prevent="addTodo">
 			<isInput class="form__input" v-model="inputValue" />
@@ -11,12 +9,12 @@
 			:todos="todos"
 			@remove-todo="removeTodo"
 			@toggle-check="toggleCheck"
-			@edit-todo="editTodo"
+			@edit-todo="openTodo"
 		/>
-		<is-modal :isModal="isOpenModal" @close-modal="toggleModal">
+		<is-modal :isModal="isOpenModal" @close-modal="openModal">
 			<h3>Редактирование задачи</h3>
 			<isInput class="form__input" v-model="todoTitle" />
-			<isBtn>Сохранить</isBtn>
+			<isBtn @click="editTodo">Сохранить</isBtn>
 		</is-modal>
 	</div>
 </template>
@@ -35,7 +33,7 @@ export default defineComponent({
 		const todoTitle = ref('')
 		const todoIndex = ref(null)
 		const isOpenModal = ref(false)
-		const todos = ref([{ id: 1, title: 'sfsdfds', isDone: false }])
+		const todos = ref([])
 
 		const setLocalSorage = () => {
 			localStorage.setItem('todos', JSON.stringify(todos.value))
@@ -65,14 +63,23 @@ export default defineComponent({
 				: (todos.value[index].isDone = false)
 		}
 
-		const editTodo = (index) => {
-			console.log('edit', index)
+		const openTodo = (index) => {
+			console.log('log')
 			todoIndex.value = index
 			isOpenModal.value = true
-			// todos.value[index].title = todoTitle.value
+			todoTitle.value = todos.value[todoIndex.value].title
 		}
 
-		const toggleModal = () => (isOpenModal.value = !isOpenModal.value)
+		const editTodo = () => {
+			todos.value[todoIndex.value].title = todoTitle.value
+			todoTitle.value = ''
+			isOpenModal.value = false
+			setLocalSorage()
+		}
+		const openModal = () => {
+			todoTitle.value = ''
+			isOpenModal.value = !isOpenModal.value
+		}
 		onMounted(() => {
 			if (localStorage.getItem('todos')) {
 				todos.value = JSON.parse(localStorage.getItem('todos'))
@@ -84,11 +91,12 @@ export default defineComponent({
 			addTodo,
 			removeTodo,
 			toggleCheck,
-			editTodo,
+			openTodo,
 			todoTitle,
 			todoIndex,
 			isOpenModal,
-			toggleModal,
+			openModal,
+			editTodo,
 		}
 	},
 })
