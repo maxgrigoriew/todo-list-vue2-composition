@@ -12,7 +12,7 @@
 			@toggle-check="toggleCheck"
 			@edit-todo="openTodo"
 		/>
-		<is-modal :isModal="isOpenModal" @close-modal="openModal">
+		<is-modal :isModal="isOpenModal" @toggle-modal="toggleModal">
 			<h3>Редактирование задачи</h3>
 			<isInput class="form__input" v-model="todoTitle" />
 			<isBtn @click="editTodo">Сохранить</isBtn>
@@ -72,13 +72,13 @@ export default defineComponent({
 			store.commit('editTodo')
 		}
 
-		const openModal = () => {
+		const toggleModal = () => {
 			store.commit('clearTodoTitle')
-			isOpenModal.value = !isOpenModal.value
+			store.commit('toggleOpenModal')
 		}
+
 		onMounted(() => {
 			store.commit('initializeStore')
-			console.log(todos)
 		})
 		return {
 			inputValue,
@@ -89,7 +89,7 @@ export default defineComponent({
 			todoTitle,
 			todoIndex,
 			isOpenModal,
-			openModal,
+			toggleModal,
 			editTodo,
 			todos,
 		}

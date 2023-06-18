@@ -1,6 +1,6 @@
 <template>
 	<transition name="fade">
-		<div class="modal" @click="closeModal" v-show="isModal">
+		<div class="modal" @click="toggleModal" v-show="isModal">
 			<div class="modal__inner" @click.stop>
 				<div class="modal__title"></div>
 				<div class="modal__content">
@@ -16,10 +16,10 @@ import { defineComponent } from 'vue'
 export default defineComponent({
 	props: ['isModal'],
 	setup(props, { emit }) {
-		const closeModal = () => {
-			emit('close-modal', false)
+		const toggleModal = () => {
+			emit('toggle-modal', false)
 		}
-		return { closeModal }
+		return { toggleModal }
 	},
 })
 </script>

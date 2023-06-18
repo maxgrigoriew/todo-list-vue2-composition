@@ -22,7 +22,6 @@ export const store = new Vuex.Store({
 	mutations: {
 		initializeStore(state) {
 			if (localStorage.getItem('todos')) {
-				console.log(JSON.parse(localStorage.getItem('todos')))
 				state.todos = JSON.parse(localStorage.getItem('todos'))
 			}
 		},
@@ -63,7 +62,6 @@ export const store = new Vuex.Store({
 				isDone: false,
 			}
 			if (state.inputValue) {
-				console.log('sdf')
 				state.todos.push(todo)
 				this.commit('setLocalSorage', state.todos)
 				state.inputValue = ''
