@@ -1,6 +1,5 @@
 <template>
 	<div class="todo">
-		todoTitle{{ inputValue }}
 		<h2 class="todo__title">Какие планы на сегодня?</h2>
 		<form class="form" @submit.prevent="addTodo">
 			<isInput class="form__input" v-model="inputValue" />
