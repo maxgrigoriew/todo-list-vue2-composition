@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import 'normalize.scss';
+
+body {
+	font-family: 'Muli', sans-serif;
+	font-weight: 400;
+	line-height: 1.5;
+	font-size: 20px;
+}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
