@@ -1,6 +1,6 @@
 <template>
 	<div class="todo">
-		<div>{{ counter }}</div>
+		{{ todos }}
 		<h2 class="todo__title">Какие планы на сегодня?</h2>
 		<form class="form" @submit.prevent="addTodo">
 			<isInput class="form__input" v-model="inputValue" />
@@ -35,12 +35,7 @@ export default defineComponent({
 		const todoTitle = ref('')
 		const todoIndex = ref(null)
 		const isOpenModal = ref(false)
-		const todos = ref([])
-		const counter = computed(() => store.state.count)
-
-		const setLocalSorage = () => {
-			localStorage.setItem('todos', JSON.stringify(todos.value))
-		}
+		const todos = computed(() => store.state.todos)
 
 		const addTodo = () => {
 			const todo = {
@@ -49,15 +44,13 @@ export default defineComponent({
 				isDone: false,
 			}
 			if (inputValue.value) {
-				todos.value.push(todo)
+				store.commit('addTodo', todo)
 				inputValue.value = ''
-				setLocalSorage()
 			}
 		}
 
 		const removeTodo = (todoId) => {
 			todos.value = todos.value.filter((todo) => todo.id !== todoId)
-			setLocalSorage()
 		}
 
 		const toggleCheck = (id, index) => {
@@ -67,7 +60,6 @@ export default defineComponent({
 		}
 
 		const openTodo = (index) => {
-			console.log('log')
 			todoIndex.value = index
 			isOpenModal.value = true
 			todoTitle.value = todos.value[todoIndex.value].title
@@ -78,7 +70,6 @@ export default defineComponent({
 			todos.value[todoIndex.value].isDone = false
 			todoTitle.value = ''
 			isOpenModal.value = false
-			setLocalSorage()
 		}
 
 		const openModal = () => {
@@ -86,13 +77,11 @@ export default defineComponent({
 			isOpenModal.value = !isOpenModal.value
 		}
 		onMounted(() => {
-			if (localStorage.getItem('todos')) {
-				todos.value = JSON.parse(localStorage.getItem('todos'))
-			}
+			store.commit('initializeStore')
+			console.log(todos)
 		})
 		return {
 			inputValue,
-			todos,
 			addTodo,
 			removeTodo,
 			toggleCheck,
@@ -102,7 +91,7 @@ export default defineComponent({
 			isOpenModal,
 			openModal,
 			editTodo,
-			counter,
+			todos,
 		}
 	},
 })
