@@ -1,5 +1,6 @@
 <template>
 	<div class="todo">
+		<div>{{ counter }}</div>
 		<h2 class="todo__title">Какие планы на сегодня?</h2>
 		<form class="form" @submit.prevent="addTodo">
 			<isInput class="form__input" v-model="inputValue" />
@@ -23,7 +24,8 @@ import IsBtn from '@/components/isBtn.vue'
 import isInput from '@/components/isInput.vue'
 import IsModal from '@/components/isModal.vue'
 import IsTodoList from '@/components/isTodoList.vue'
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import { store } from '../store'
 
 export default defineComponent({
 	name: 'TodoPage',
@@ -34,6 +36,7 @@ export default defineComponent({
 		const todoIndex = ref(null)
 		const isOpenModal = ref(false)
 		const todos = ref([])
+		const counter = computed(() => store.state.count)
 
 		const setLocalSorage = () => {
 			localStorage.setItem('todos', JSON.stringify(todos.value))
@@ -99,6 +102,7 @@ export default defineComponent({
 			isOpenModal,
 			openModal,
 			editTodo,
+			counter,
 		}
 	},
 })
