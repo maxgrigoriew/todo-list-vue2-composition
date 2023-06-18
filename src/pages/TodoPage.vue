@@ -1,6 +1,6 @@
 <template>
 	<div class="todo">
-		{{ todos }}
+		todoTitle{{ inputValue }}
 		<h2 class="todo__title">Какие планы на сегодня?</h2>
 		<form class="form" @submit.prevent="addTodo">
 			<isInput class="form__input" v-model="inputValue" />
@@ -24,50 +24,48 @@ import IsBtn from '@/components/isBtn.vue'
 import isInput from '@/components/isInput.vue'
 import IsModal from '@/components/isModal.vue'
 import IsTodoList from '@/components/isTodoList.vue'
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import { store } from '../store'
 
 export default defineComponent({
 	name: 'TodoPage',
 	components: { IsBtn, isInput, IsTodoList, IsModal },
 	setup() {
-		const inputValue = ref('')
-		const todoTitle = ref('')
-		const todoIndex = ref(null)
-		const isOpenModal = ref(false)
+		const inputValue = computed({
+			get() {
+				return store.state.inputValue
+			},
+			set(value) {
+				store.commit('setInputValue', value)
+			},
+		})
 		const todos = computed(() => store.state.todos)
+		const todoIndex = computed(() => store.state.todoIndex)
+		const isOpenModal = computed(() => store.state.isOpenModal)
+		const todoTitle = computed(() => store.state.todoTitle)
 
 		const addTodo = () => {
-			const todo = {
-				id: Date.now(),
-				title: inputValue.value,
-				isDone: false,
-			}
-			if (inputValue.value) {
-				store.commit('addTodo', todo)
-				inputValue.value = ''
-			}
+			store.commit('addTodo')
 		}
 
 		const removeTodo = (todoId) => {
 			store.commit('removeTodo', todoId)
 		}
 
-		const toggleCheck = (id, index) => {
+		const toggleCheck = (index) => {
 			store.commit('toggleCheck', index)
 		}
 
 		const openTodo = (index) => {
-			todoIndex.value = index
-			isOpenModal.value = true
-			todoTitle.value = todos.value[todoIndex.value].title
+			store.commit('openTodo', index)
 		}
 
 		const editTodo = () => {
-			todos.value[todoIndex.value].title = todoTitle.value
-			todos.value[todoIndex.value].isDone = false
-			todoTitle.value = ''
-			isOpenModal.value = false
+			store.commit('editTodo')
+			// todos.value[todoIndex.value].title = todoTitle.value
+			// todos.value[todoIndex.value].isDone = false
+			// todoTitle.value = ''
+			// isOpenModal.value = false
 		}
 
 		const openModal = () => {

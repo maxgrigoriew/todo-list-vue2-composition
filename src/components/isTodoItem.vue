@@ -6,10 +6,7 @@
 				<span class="todo__title">{{ todo.title }}</span>
 			</div>
 			<div class="todo__buttons">
-				<isBtn
-					@click="toggleCheck(todo.id, index)"
-					:class="{ active: todo.isDone }"
-				>
+				<isBtn @click="toggleCheck(index)" :class="{ active: todo.isDone }">
 					<font-awesome-icon icon="fa-solid fa-check" />
 				</isBtn>
 				<isBtn @click="removeTodo(todo.id)">
@@ -30,8 +27,8 @@ export default defineComponent({
 	emits: ['isDone'],
 	components: { isBtn },
 	setup(props, { emit }) {
-		const toggleCheck = (id, index) => {
-			emit('toggle-check', id, index)
+		const toggleCheck = (index) => {
+			emit('toggle-check', index)
 		}
 
 		const removeTodo = (id) => {

@@ -7,6 +7,10 @@ export const store = new Vuex.Store({
 	state: {
 		count: 0,
 		todos: [],
+		inputValue: '',
+		todoTitle: '',
+		isOpenModal: false,
+		todoIndex: null,
 	},
 	getters: {
 		getTodos(state) {
@@ -26,11 +30,6 @@ export const store = new Vuex.Store({
 			localStorage.setItem('todos', JSON.stringify(state.todos))
 		},
 
-		addTodo(state, todo) {
-			state.todos.push(todo)
-			this.commit('setLocalSorage', state.todos)
-		},
-
 		removeTodo(state, todoId) {
 			state.todos = state.todos.filter((todo) => todo.id !== todoId)
 			this.commit('setLocalSorage', state.todos)
@@ -41,6 +40,37 @@ export const store = new Vuex.Store({
 				? (state.todos[index].isDone = true)
 				: (state.todos[index].isDone = false)
 			this.commit('setLocalSorage', state.todos)
+		},
+
+		editTodo(state) {
+			state.todos[state.todoIndex].title = state.todoTitle
+			state.todos[state.todoIndex].isDone = false
+			state.todoTitle = ''
+			state.isOpenModal = false
+		},
+
+		openTodo(state, index) {
+			state.todoIndex = index
+			state.isOpenModal = true
+			state.todoTitle = state.todos[state.todoIndex].title
+		},
+
+		addTodo(state) {
+			const todo = {
+				id: Date.now(),
+				title: state.inputValue,
+				isDone: false,
+			}
+			if (state.inputValue) {
+				console.log('sdf')
+				state.todos.push(todo)
+				this.commit('setLocalSorage', state.todos)
+				state.inputValue = ''
+			}
+		},
+
+		setInputValue(state, payload) {
+			state.inputValue = payload
 		},
 	},
 })
