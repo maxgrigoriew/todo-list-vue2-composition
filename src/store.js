@@ -47,6 +47,7 @@ export const store = new Vuex.Store({
 			state.todos[state.todoIndex].isDone = false
 			state.todoTitle = ''
 			state.isOpenModal = false
+			this.commit('setLocalSorage', state.todos)
 		},
 
 		openTodo(state, index) {
@@ -68,9 +69,17 @@ export const store = new Vuex.Store({
 				state.inputValue = ''
 			}
 		},
-
 		setInputValue(state, payload) {
 			state.inputValue = payload
+		},
+		setTodoTitle(state, payload) {
+			state.todoTitle = payload
+		},
+		clearTodoTitle(state) {
+			state.todoTitle = ''
+		},
+		toggleOpenModal(state) {
+			state.isOpenModal = !state.isOpenModal
 		},
 	},
 })

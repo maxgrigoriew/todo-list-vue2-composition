@@ -39,10 +39,18 @@ export default defineComponent({
 				store.commit('setInputValue', value)
 			},
 		})
+
+		const todoTitle = computed({
+			get() {
+				return store.state.todoTitle
+			},
+			set(value) {
+				store.commit('setTodoTitle', value)
+			},
+		})
 		const todos = computed(() => store.state.todos)
 		const todoIndex = computed(() => store.state.todoIndex)
 		const isOpenModal = computed(() => store.state.isOpenModal)
-		const todoTitle = computed(() => store.state.todoTitle)
 
 		const addTodo = () => {
 			store.commit('addTodo')
@@ -62,14 +70,10 @@ export default defineComponent({
 
 		const editTodo = () => {
 			store.commit('editTodo')
-			// todos.value[todoIndex.value].title = todoTitle.value
-			// todos.value[todoIndex.value].isDone = false
-			// todoTitle.value = ''
-			// isOpenModal.value = false
 		}
 
 		const openModal = () => {
-			todoTitle.value = ''
+			store.commit('clearTodoTitle')
 			isOpenModal.value = !isOpenModal.value
 		}
 		onMounted(() => {
