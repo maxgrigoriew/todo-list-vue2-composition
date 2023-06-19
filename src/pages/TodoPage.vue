@@ -16,7 +16,9 @@
 		<is-modal :isModal="isOpenModal" @toggle-modal="toggleModal">
 			<h3>Редактирование задачи</h3>
 			<isInput class="form__input" v-model="todoTitle" />
-			<isBtn @click="editTodo" class="form__btn">Сохранить</isBtn>
+			<isBtn @click="editTodo" class="form__btn">
+				<font-awesome-icon icon="fa-solid fa-check"
+			/></isBtn>
 		</is-modal>
 	</div>
 </template>
