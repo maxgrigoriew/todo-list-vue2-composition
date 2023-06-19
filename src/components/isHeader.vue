@@ -20,7 +20,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import './../assets/styles/vars';
-
+.header {
+	border: 2px solid $accent-color;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
 .menu {
 	&__list {
 		display: flex;
@@ -31,6 +35,10 @@ export default {
 	}
 	&__link {
 		color: $accent-color;
+		transition: color 0.3s ease-in-out;
+		&:hover {
+			color: $dark-color;
+		}
 	}
 }
 </style>

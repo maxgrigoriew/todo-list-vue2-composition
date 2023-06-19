@@ -1,9 +1,11 @@
 <template>
 	<div class="todo">
-		<h2 class="todo__title">Какие планы на сегодня?</h2>
+		<h2 class="todo__title">Список задач</h2>
 		<form class="form" @submit.prevent="addTodo">
 			<isInput class="form__input" v-model="inputValue" />
-			<IsBtn class="btn" @click="addTodo">Добавить задачу</IsBtn>
+			<IsBtn class="form__btn" @click="addTodo">
+				<font-awesome-icon icon="fa-solid fa-plus"
+			/></IsBtn>
 		</form>
 		<is-todo-list
 			:todos="todos"
@@ -14,7 +16,7 @@
 		<is-modal :isModal="isOpenModal" @toggle-modal="toggleModal">
 			<h3>Редактирование задачи</h3>
 			<isInput class="form__input" v-model="todoTitle" />
-			<isBtn @click="editTodo">Сохранить</isBtn>
+			<isBtn @click="editTodo" class="form__btn">Сохранить</isBtn>
 		</is-modal>
 	</div>
 </template>
@@ -97,6 +99,16 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .form {
+	display: flex;
 	margin-bottom: 40px;
+	&__input {
+		flex-grow: 1;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+	}
+	&__btn {
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
 }
 </style>

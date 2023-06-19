@@ -17,6 +17,7 @@
 	transition: background 0.3s ease-in-out;
 	&:hover {
 		background: $dark-color;
+		color: #fff;
 	}
 }
 </style>

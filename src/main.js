@@ -8,10 +8,11 @@ import {
 	faTrashCan,
 	faPenToSquare,
 	faCheck,
+	faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { store } from './store.js'
 import './assets/styles/main.scss'
-library.add(faTrashCan, faPenToSquare, faCheck)
+library.add(faTrashCan, faPenToSquare, faCheck, faPlus)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

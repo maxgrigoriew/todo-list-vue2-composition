@@ -6,13 +6,17 @@
 				<span class="todo__title">{{ todo.title }}</span>
 			</div>
 			<div class="todo__buttons">
-				<isBtn @click="toggleCheck(index)" :class="{ active: todo.isDone }">
+				<isBtn
+					@click="toggleCheck(index)"
+					class="todo__btn"
+					:class="{ active: todo.isDone }"
+				>
 					<font-awesome-icon icon="fa-solid fa-check" />
 				</isBtn>
-				<isBtn @click="removeTodo(todo.id)">
+				<isBtn @click="removeTodo(todo.id)" class="todo__btn">
 					<font-awesome-icon icon="fa-solid fa-trash-can" />
 				</isBtn>
-				<isBtn @click="editTodo(index)">
+				<isBtn @click="editTodo(index)" class="todo__btn">
 					<font-awesome-icon icon="fa-solid fa-pen-to-square" />
 				</isBtn>
 			</div>
@@ -51,6 +55,10 @@ export default defineComponent({
 
 .todo {
 	padding: 20px;
+	border-radius: 10px;
+	background: $accent-color;
+	color: #fff;
+	font-weight: 700;
 	border: 2px solid $accent-color;
 	&__inner {
 		display: flex;
@@ -61,6 +69,25 @@ export default defineComponent({
 	&__buttons {
 		display: flex;
 		gap: 0 10px;
+	}
+	&__btn {
+		width: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
+		border: 1px solid $accent-color;
+		background: #fff;
+		color: $accent-color;
+		&:hover {
+			background: $dark-color;
+			color: #fff;
+		}
+	}
+	&__number {
+		display: inline-block;
+		margin-right: 10px;
+		font-weight: 700;
 	}
 }
 .done {
