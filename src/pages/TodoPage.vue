@@ -1,6 +1,6 @@
 <template>
-	<div class="todo">
-		<h2 class="todo__title">Список задач</h2>
+	<div class="todos">
+		<h1 class="todos__title">Страница списка задач</h1>
 		<form class="form" @submit.prevent="addTodo">
 			<isInput class="form__input" v-model="inputValue" />
 			<IsBtn class="form__btn" @click="addTodo">
@@ -100,6 +100,12 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+.todos {
+	padding-top: 100px;
+	&__title {
+		margin-bottom: 50px;
+	}
+}
 .form {
 	display: flex;
 	margin-bottom: 40px;
